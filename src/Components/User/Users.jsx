@@ -24,7 +24,7 @@ const Users = () => {
     useEffect(() => {
         fetchData()
     }, [])
-
+console.log(error)
     function debounce(func, wait) {
         let timeout;
         return function returnedFunction(...args) {
@@ -95,12 +95,14 @@ const Users = () => {
         }
         setSearched(true)
         let searchedData = filterDataByFirstName(searchedValue);
-        console.log(searchedData)
         setSearchedData(searchedData)
 
     }, 500);
     const handleAddUser = () => {
         document.getElementById('my_modal_4').showModal()
+    }
+    if(error){
+return "Failed To Fetch!!"
     }
     let mappingValue = searched ? searchedData : users
     return (

@@ -5,10 +5,13 @@ import Spinner from '../Components/Utils/Spinner';
 
 const SingleUser = () => {
     const {id={}}=useParams()
-    const {user=[],isLoading}=useFetch(id)
+    const {user=[],isLoading,error}=useFetch(id)
     if(isLoading || user===null){
         return <Spinner/>
         
+    }
+    if(error){
+        return "Failed To Fetch ...!"
     }
     const {firstName, lastName, email, image, address: { city, address, state }, company: { name: companyName } } = user
     return (

@@ -7,7 +7,7 @@ const User = ({ props }) => {
         <div className='card flex px-4 my-2 shadow-md primary_black border-zinc-300 hover:border-x-2'>
 
             <div className=''>
-                <img src={image} className='object-contain' alt={firstName + lastName} srcset="" />
+                <img src={image} className='object-contain' alt={firstName + lastName} />
 
             </div>
             <div className='py-2'>
