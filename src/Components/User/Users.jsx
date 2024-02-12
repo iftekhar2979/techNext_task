@@ -4,7 +4,9 @@ import Spinner from '../Utils/Spinner';
 import useFetchAllData from '../../CustomHooks/useFetchAllData';
 import Filter from './Filter';
 import Search from './Search';
-import useDebounce from '../../CustomHooks/useDebounce';
+
+import AddUser from './addUser';
+import Modal from '../Utils/Modal';
 
 function toCamelCase(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
@@ -15,6 +17,7 @@ function toCamelCase(str) {
 const Users = () => {
     const [searched, setSearched] = useState(false)
     const [searchedData, setSearchedData] = useState([])
+    const [userInfo, setUserInfo] = useState({})
     const { fetchData, users = [], setUsers, error, page, isLoading } = useFetchAllData(`https://dummyjson.com/users?`)
 
     //Fetch Data When Component First Mount
@@ -84,6 +87,7 @@ const Users = () => {
 
     const handleSearch = debounce((e) => {
         const searchedValue = e.target.value;
+        console.log(searchedValue)
         if (searchedValue === '') {
             setSearched(false)
             setSearchedData([])
@@ -91,20 +95,29 @@ const Users = () => {
         }
         setSearched(true)
         let searchedData = filterDataByFirstName(searchedValue);
+        console.log(searchedData)
         setSearchedData(searchedData)
 
     }, 500);
+    const handleAddUser = () => {
+        document.getElementById('my_modal_4').showModal()
+    }
     let mappingValue = searched ? searchedData : users
     return (
         <>
-            <Filter handleInputDropdown={handleInputDropdown} />
-            <Search handleSearch={handleSearch} />
+            <div className='px-4 flex justify-between my-4'>
+                <Filter handleInputDropdown={handleInputDropdown} />
+                <Search handleSearch={handleSearch} />
+                <AddUser handleAddUser={handleAddUser} />
+            </div>
+
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-6 mt-2 lg:mt-0'>
                 {
                     mappingValue?.map(item => <User key={item.id} props={item} />)
                 }
             </div>
             {isLoading && <Spinner />}
+            <Modal setUsers={setUsers} />
         </>
 
     )

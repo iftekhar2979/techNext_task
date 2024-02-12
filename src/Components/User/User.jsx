@@ -17,9 +17,7 @@ const User = ({ props }) => {
                 <h2 className='font-semibold'><span className='font-bold text-xl'>City : </span>{city}</h2>
                 <h2 className='font-semibold'><span className='font-bold text-xl'>Adress : </span>{address}</h2>
                 <h2 className='font-semibold'><span className='font-bold text-xl'>State : </span>{state}</h2>
-                {/* <p>City: {city}</p>
-                <p>Adress: {address}</p>
-                <p>State: {state}</p> */}
+
             </div>
         </div>
     )
