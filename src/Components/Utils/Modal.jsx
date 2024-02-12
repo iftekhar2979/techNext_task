@@ -52,6 +52,7 @@ const Modal = ({setUsers}) => {
                         setUsers(prev=>{
                             return [data,...prev]
                         })
+                        document.getElementById("my_modal_4").close()
                     })
                     .catch(error => {
                         console.error('Error:', error);
