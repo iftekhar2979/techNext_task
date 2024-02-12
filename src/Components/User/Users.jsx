@@ -24,7 +24,7 @@ const Users = () => {
     useEffect(() => {
         fetchData()
     }, [])
-console.log(error)
+    console.log(error)
     function debounce(func, wait) {
         let timeout;
         return function returnedFunction(...args) {
@@ -101,8 +101,8 @@ console.log(error)
     const handleAddUser = () => {
         document.getElementById('my_modal_4').showModal()
     }
-    if(error){
-return "Failed To Fetch!!"
+    if (error) {
+        return "Failed To Fetch!!"
     }
     let mappingValue = searched ? searchedData : users
     return (
@@ -113,11 +113,12 @@ return "Failed To Fetch!!"
                 <AddUser handleAddUser={handleAddUser} />
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-6 mt-2 lg:mt-0'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-6 mt-2 lg:mt-0'>
                 {
                     mappingValue?.map(item => <User key={item.id} props={item} />)
                 }
             </div>
+
             {isLoading && <Spinner />}
             <Modal setUsers={setUsers} />
         </>

@@ -40,7 +40,6 @@ const Navbar = (props) => {
                     </ul>
                 </div>
                 <a className='text-white font-semibold  normal-case text-xl'>Tech Next.</a>
-                {/* <a className='btn btn-ghost normal-case text-xl'>XYZ SOURCING</a> */}
             </div>
             <div className='navbar-end text-white font-semibold  hidden lg:flex'>
                 <ul className='menu menu-horizontal px-1'>
