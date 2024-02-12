@@ -10,7 +10,7 @@ const useFetchAllData = (url) => {
         setIsLoading(true);
         setError(null);
         try {
-            const response = await fetch(`${url}?limit=9&select=firstName,lastName,company,image,email,address&skip=${9 * page}`);
+            const response = await fetch(`${url}select=firstName,lastName,company,image,email,address&skip=${9 * page}`);
             const data = await response.json();
             setUsers(prevItems => [...prevItems, ...data.users]);
             setPage(prevPage => prevPage + 1);

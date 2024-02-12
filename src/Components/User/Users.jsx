@@ -3,6 +3,8 @@ import User from './User';
 import Spinner from '../Utils/Spinner';
 import useFetchAllData from '../../CustomHooks/useFetchAllData';
 import Filter from './Filter';
+import Search from './Search';
+import useDebounce from '../../CustomHooks/useDebounce';
 
 function toCamelCase(str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
@@ -11,26 +13,28 @@ function toCamelCase(str) {
 }
 
 const Users = () => {
-    const { fetchData, users = [], setUsers, error, page, isLoading } = useFetchAllData('https://dummyjson.com/users')
-    const [sortingValue, setSortingValue] = useState('')
+    const [searched, setSearched] = useState(false)
+    const [searchedData, setSearchedData] = useState([])
+    const { fetchData, users = [], setUsers, error, page, isLoading } = useFetchAllData(`https://dummyjson.com/users?`)
+
     //Fetch Data When Component First Mount
     useEffect(() => {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        //Clean Up Event Listener For Scrolling
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [isLoading]);
+    function debounce(func, wait) {
+        let timeout;
+        return function returnedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
 
-    //Infinity scrolling Function
-    const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading) {
-            return;
-        }
-        fetchData();
-    };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     const handleInputDropdown = (e) => {
         let sortsValue = toCamelCase(e.target.value)
 
@@ -52,7 +56,7 @@ const Users = () => {
                 return 0;
             });
             setUsers(sorted)
-            return 
+            return
         }
         sorted = [...users].sort((a, b) => {
 
@@ -72,12 +76,32 @@ const Users = () => {
 
     }
 
+    function filterDataByFirstName(searchedValue) {
+        return users?.filter(item =>
+            item.firstName.toLowerCase().includes(searchedValue.toLowerCase())
+        );
+    }
+
+    const handleSearch = debounce((e) => {
+        const searchedValue = e.target.value;
+        if (searchedValue === '') {
+            setSearched(false)
+            setSearchedData([])
+            return
+        }
+        setSearched(true)
+        let searchedData = filterDataByFirstName(searchedValue);
+        setSearchedData(searchedData)
+
+    }, 500);
+    let mappingValue = searched ? searchedData : users
     return (
         <>
             <Filter handleInputDropdown={handleInputDropdown} />
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 mt-2 lg:mt-0'>
+            <Search handleSearch={handleSearch} />
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-6 mt-2 lg:mt-0'>
                 {
-                    users?.map(item => <User key={item.id} props={item} />)
+                    mappingValue?.map(item => <User key={item.id} props={item} />)
                 }
             </div>
             {isLoading && <Spinner />}
