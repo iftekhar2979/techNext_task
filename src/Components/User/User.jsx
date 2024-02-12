@@ -15,7 +15,7 @@ const User = ({ props }) => {
                  <span className='font-bold text-xl'>Email : </span><span className='font-semibold'> {email}</span>
                 <h2 className='font-semibold'><span className='font-bold text-xl'>Company Name : </span>{companyName}</h2>
                 <h2 className='font-semibold'><span className='font-bold text-xl'>City : </span>{city}</h2>
-                <h2 className='font-semibold'><span className='font-bold text-xl'>Adress : </span>{address}</h2>
+                <h2 className='font-semibold'><span className='font-bold text-xl'>Address : </span>{address}</h2>
                 <h2 className='font-semibold'><span className='font-bold text-xl'>State : </span>{state}</h2>
 
             </div>
