@@ -1,4 +1,5 @@
 import react from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = (props) => {
     return (
@@ -30,10 +31,11 @@ const Navbar = (props) => {
                             HOME
 
                         </li>
+                        <Link to="/">
                         <li className='my-2'>
                             USERS
                         </li>
-
+                        </Link>
 
                     </ul>
                 </div>
@@ -47,9 +49,10 @@ const Navbar = (props) => {
                         HOME
 
                     </li>
-                    <li className='mx-4 cursor-pointer'>
+                    <Link to="/"><li className='mx-4 cursor-pointer text-blue-700 '>
                         USERS
                     </li>
+                    </Link>
                 </ul>
             </div>
          
